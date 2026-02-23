@@ -124,11 +124,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\WinApp\WinApp.h" />
+    <ClInclude Include="Source\Engine\InputManager.h" />
+    <ClInclude Include="Source\Engine\Renderer.h" />
+    <ClInclude Include="Source\Engine\WinApp.h" />
     <ClInclude Include="WinApp\WinApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\WinApp\WinApp.cpp" />
+    <ClCompile Include="Source\Engine\InputManager.cpp" />
+    <ClCompile Include="Source\Engine\Renderer.cpp" />
+    <ClCompile Include="Source\Engine\WinApp.cpp" />
+    <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
