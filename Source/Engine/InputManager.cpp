@@ -2,16 +2,19 @@
 
 InputManager::InputManager()
 {
+
 }
 
 
 InputManager::InputManager(const InputManager& other)
 {
+
 }
 
 
 InputManager::~InputManager()
 {
+
 }
 
 
