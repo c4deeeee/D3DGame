@@ -6,6 +6,7 @@
     <ClInclude Include="Source\Engine\Renderer.h" />
     <ClInclude Include="Source\Engine\InputManager.h" />
     <ClInclude Include="Source\Engine\Direct3D.h" />
+    <ClInclude Include="Source\Engine\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\WinMain.cpp" />
@@ -13,5 +14,10 @@
     <ClCompile Include="Source\Engine\InputManager.cpp" />
     <ClCompile Include="Source\Engine\Renderer.cpp" />
     <ClCompile Include="Source\Engine\Direct3D.cpp" />
+    <ClCompile Include="Source\Engine\Shader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\Shader\color.vs.hlsl" />
+    <FxCompile Include="Source\Shader\color.ps.hlsl" />
   </ItemGroup>
 </Project>
