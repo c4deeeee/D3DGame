@@ -428,3 +428,149 @@ bool Direct3D::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	return true;
 }
 
+
+void Direct3D::Shutdown()
+{
+	/*
+	* 전체화면 스왑 체인 상태에서 스왑 체인을 해제 할경우 충돌이 발생할 수 있으므로 반드시 창모드 전환 후에 해제
+	* SetFullscreenState()는 DXGI, 드라이버, OS 수준의 설정 변경을 수행하는 무거운 작업 수행
+	* 이때 백 버퍼나 뷰포트와 같은 자원의 상태가 변경될 수 있고, 먼저 창모드로 변경하지 않고 자원을 해제하게 되면
+	* 자원들이 전체화면에 대한 상태에서 해제되고 나서 스왑 체인만 창모드 상태로 해제하게 될 경우 충돌 발생 위험
+	* 미리 스왑 체인을 창모드에 대한 상태로 전환시켜 모든 자원의 상태 일관성을 유지하면 안전한 자원 해제 가능
+	*/
+	if (m_swapChain)
+	{
+		m_swapChain->SetFullscreenState(false, nullptr);
+	}
+
+	if (m_rasterState)
+	{
+		m_rasterState->Release();
+		m_rasterState = nullptr;
+	}
+
+	if (m_depthStencilView)
+	{
+		m_depthStencilView->Release();
+		m_depthStencilView = nullptr;
+	}
+
+	if (m_depthStencilState)
+	{
+		m_depthStencilState->Release();
+		m_depthStencilState = nullptr;
+	}
+
+	if (m_depthStencilBuffer)
+	{
+		m_depthStencilBuffer->Release();
+		m_depthStencilBuffer = nullptr;
+	}
+
+	if (m_renderTargetView)
+	{
+		m_renderTargetView->Release();
+		m_renderTargetView = nullptr;
+	}
+
+	if (m_deviceContext)
+	{
+		m_deviceContext->Release();
+		m_deviceContext = nullptr;
+	}
+
+	if (m_device)
+	{
+		m_device->Release();
+		m_device = nullptr;
+	}
+
+	if (m_swapChain)
+	{
+		m_swapChain->Release();
+		m_swapChain = nullptr;
+	}
+}
+
+
+void Direct3D::BeginScene(float red, float green, float blue, float alpha)
+{
+	/*
+	* 매 프레임을 그리기 전 백 버퍼와 깊이/스텐실 버퍼를 초기화
+	*/
+
+	float color[4];
+	color[0] = red;
+	color[1] = green;
+	color[2] = blue;
+	color[3] = alpha;
+
+	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
+	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.f, 0);
+}
+
+
+void Direct3D::EndScene()
+{
+	/*
+	* 렌더링 된 백 버퍼의 내용을 모니터에 출력(드로우 콜 명령 아님)
+	*/
+
+	if (m_vsync_enabled)
+	{
+		m_swapChain->Present(1, 0);
+	}
+	else
+	{
+		m_swapChain->Present(0, 0);
+	}
+}
+
+
+ID3D11Device* Direct3D::GetDevice()
+{
+	return m_device;
+}
+
+
+ID3D11DeviceContext* Direct3D::GetDeviceContext()
+{
+	return m_deviceContext;
+}
+
+
+void Direct3D::GetProjectionMatrix(XMMATRIX& projectionMatrix)
+{
+	projectionMatrix = m_projectionMatrix;
+}
+
+
+void Direct3D::GetWorldMatrix(XMMATRIX& worldMatrix)
+{
+	worldMatrix = m_worldMatrix;
+}
+
+
+void Direct3D::GetOrthoMatrix(XMMATRIX& orthoMatrix)
+{
+	orthoMatrix = m_orthoMatrix;
+}
+
+
+void Direct3D::GetVideoCardInfo(char* cardName, int& memory)
+{
+	strcpy_s(cardName, 128, m_videoCardDescription);
+	memory = m_videoCardMemory;
+}
+
+
+void Direct3D::SetBackBufferRenderTarget()
+{
+	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
+}
+
+
+void Direct3D::ResetViewport()
+{
+	m_deviceContext->RSSetViewports(1, &m_viewport);
+}
