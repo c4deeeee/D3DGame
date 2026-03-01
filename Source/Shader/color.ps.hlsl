@@ -4,7 +4,8 @@ struct PixelInput
     float4 color : COLOR;
 };
 
-float4 ColorPixelShader(PixelInput input)
+float4 ColorPixelShader(PixelInput input) : SV_Target
 {
-    return input.color;
+    float4 outColor = mul(input.color, 0.5f);
+    return outColor;
 }

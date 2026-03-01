@@ -163,6 +163,7 @@ void WinApp::InitializeWindows(int& screenWidth, int& screenHeight)
 
 #pragma endregion
 
+
 #pragma region Set Resolution
 
 	screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -191,6 +192,7 @@ void WinApp::InitializeWindows(int& screenWidth, int& screenHeight)
 
 #pragma endregion
 
+
 #pragma region Create Window
 
 	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
@@ -203,6 +205,7 @@ void WinApp::InitializeWindows(int& screenWidth, int& screenHeight)
 	ShowCursor(false);
 
 #pragma endregion
+
 }
 
 

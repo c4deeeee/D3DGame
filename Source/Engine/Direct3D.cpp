@@ -14,7 +14,7 @@ Direct3D::Direct3D() :
 }
 
 
-Direct3D::Direct3D(const Direct3D&)
+Direct3D::Direct3D(const Direct3D& rhs)
 {
 
 }
@@ -202,12 +202,11 @@ bool Direct3D::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	}
 
 	/*
-	* 백 버퍼의 사용 용도를 명시
+	* 백 버퍼의 사용 용도(Usage)를 명시
 	* 그래픽 카드는 백 버퍼를 리소스로 연산을 수행하게 되고, 버퍼의 용도에 대한 정보를 플래그 형태로 전달
 	* DXGI_USAGE_RENDER_TARGET_OUTPUT 플래그는 해당 버퍼를 픽셀 셰이더를 그리는 용도를 전달
 	*/
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-
 	swapChainDesc.OutputWindow = hwnd;
 	swapChainDesc.SampleDesc.Count = 1; // 멀티 샘플링 안티 엘리어싱(MSAA), 1 = 사용 안함
 	swapChainDesc.SampleDesc.Quality = 0;
