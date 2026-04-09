@@ -46,3 +46,7 @@ CMakeSettings.json
 *.cache
 *.tmp
 *.bak
+/Source/Resources/Old/Model.cpp
+/Source/Resources/Old/Model.h
+/Source/Resources/Old/TextureShader.cpp
+/Source/Resources/Old/TextureShader.h

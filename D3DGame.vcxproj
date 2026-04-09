@@ -70,6 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Dev\D3DGame\ThirdParty\DirectXTex\include;C:\Dev\D3DGame\ThirdParty\assimp\include;C:\Dev\D3DGame\Source;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Dev\D3DGame\ThirdParty\DirectXTex\build;C:\Dev\D3DGame\ThirdParty\assimp\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -108,10 +112,11 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;d3dcompiler.lib;DirectXTex.lib;libassimp.dll.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /i /d "$(ProjectDir)Source\Shader\*.hlsl" "$(OutDir)Shader\"</Command>
+      <Command>xcopy /y /i /d /e "$(ProjectDir)Resource" "$(OutDir)Resource"
+xcopy /y /d "$(ProjectDir)ThirdParty\assimp\bin\libassimp-6.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,35 +135,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Engine\Camera.h" />
-    <ClInclude Include="Source\Engine\Direct3D.h" />
-    <ClInclude Include="Source\Engine\InputManager.h" />
-    <ClInclude Include="Source\Engine\Model.h" />
-    <ClInclude Include="Source\Engine\Renderer.h" />
-    <ClInclude Include="Source\Engine\Shader.h" />
-    <ClInclude Include="Source\Engine\WinApp.h" />
+    <ClInclude Include="Source\Graphics\GraphicsDevice.h" />
+    <ClInclude Include="Source\Graphics\PipelineStates.h" />
+    <ClInclude Include="Source\Graphics\Renderer.h" />
+    <ClInclude Include="Source\Graphics\RenderSurface.h" />
+    <ClInclude Include="Source\Platform\Game.h" />
+    <ClInclude Include="Source\Platform\Utility.h" />
+    <ClInclude Include="Source\Resources\Mesh.h" />
+    <ClInclude Include="Source\Resources\ModelPart.h" />
+    <ClInclude Include="Source\Resources\Shader.h" />
+    <ClInclude Include="Source\Scene\Camera.h" />
+    <ClInclude Include="Source\Platform\InputManager.h" />
+    <ClInclude Include="Source\Resources\Texture.h" />
+    <ClInclude Include="Source\Platform\WinApp.h" />
+    <ClInclude Include="Source\Resources\Model.h" />
+    <ClInclude Include="Source\Scene\Object.h" />
+    <ClInclude Include="Source\Scene\World.h" />
     <ClInclude Include="WinApp\WinApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Engine\Camera.cpp" />
-    <ClCompile Include="Source\Engine\Direct3D.cpp" />
-    <ClCompile Include="Source\Engine\InputManager.cpp" />
-    <ClCompile Include="Source\Engine\Model.cpp" />
-    <ClCompile Include="Source\Engine\Renderer.cpp" />
-    <ClCompile Include="Source\Engine\Shader.cpp" />
-    <ClCompile Include="Source\Engine\WinApp.cpp" />
-    <ClCompile Include="Source\WinMain.cpp" />
+    <ClCompile Include="Source\Graphics\GraphicsDevice.cpp" />
+    <ClCompile Include="Source\Graphics\PipelineStates.cpp" />
+    <ClCompile Include="Source\Graphics\Renderer.cpp" />
+    <ClCompile Include="Source\Graphics\RenderSurface.cpp" />
+    <ClCompile Include="Source\Platform\Game.cpp" />
+    <ClCompile Include="Source\Resources\Mesh.cpp" />
+    <ClCompile Include="Source\Resources\Model.cpp" />
+    <ClCompile Include="Source\Resources\ModelPart.cpp" />
+    <ClCompile Include="Source\Resources\Shader.cpp" />
+    <ClCompile Include="Source\Scene\Camera.cpp" />
+    <ClCompile Include="Source\Platform\InputManager.cpp" />
+    <ClCompile Include="Source\Resources\Texture.cpp" />
+    <ClCompile Include="Source\Platform\WinApp.cpp" />
+    <ClCompile Include="Source\Platform\WinMain.cpp" />
+    <ClCompile Include="Source\Scene\Object.cpp" />
+    <ClCompile Include="Source\Scene\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Source\Shader\color.ps.hlsl">
+    <FxCompile Include="Resource\Shader\pixel.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</TreatOutputAsContent>
     </FxCompile>
-    <FxCompile Include="Source\Shader\color.vs.hlsl">
+    <FxCompile Include="Resource\Shader\vertex.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</TreatOutputAsContent>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
